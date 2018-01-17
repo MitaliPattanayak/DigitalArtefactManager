@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalArtefactManager", "DigitalArtefactManager\DigitalArtefactManager.csproj", "{5097DE42-C72B-4BFA-8210-D0713DDF134D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalArtefactManager.Tests", "DigitalArtefactManager.Tests\DigitalArtefactManager.Tests.csproj", "{A5B2A9D2-9624-4821-BF88-A5B104163B7C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5097DE42-C72B-4BFA-8210-D0713DDF134D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5097DE42-C72B-4BFA-8210-D0713DDF134D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5097DE42-C72B-4BFA-8210-D0713DDF134D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5097DE42-C72B-4BFA-8210-D0713DDF134D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5B2A9D2-9624-4821-BF88-A5B104163B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5B2A9D2-9624-4821-BF88-A5B104163B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5B2A9D2-9624-4821-BF88-A5B104163B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5B2A9D2-9624-4821-BF88-A5B104163B7C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F786F323-0C36-4288-9BA2-E4772334B13C}
+	EndGlobalSection
+EndGlobal
