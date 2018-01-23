@@ -63,15 +63,15 @@
     </script>
 
     <script type="text/javascript">
-        var val = parseInt(@ViewBag.likeCount);
+
+
+
+        $(document).ready(function () {
+ var val = parseInt(@ViewBag.likeCount);
         if (val > 5)
         {
             display();
         }
-        
-
-        $(document).ready(function () {
-
             $('.btnLike').click(function () {
                 var AId = $(this).data('id');
                 $.ajax({
@@ -85,10 +85,10 @@
                         {
                             alert("You liked the article '" + data + "' times");
                         }
-                        @*else {
-                            @ViewBag.likeCount= data;
-                            display(data);
-                        }*@
+                        else {
+                            display();
+                            alert("Sorry, you have reached the like limits.'" + data + "' times");
+                        }
                     }
                 });
             });
