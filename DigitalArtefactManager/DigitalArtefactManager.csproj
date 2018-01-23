@@ -152,6 +152,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -179,11 +180,22 @@
     <Compile Include="Models\Like.cs">
       <DependentUpon>Artefact.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>Artefact.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\articles.jpg" />
+    <Content Include="Content\Images\dislikes.jpg" />
+    <Content Include="Content\Images\likes.jpg" />
+    <Content Include="Content\Images\likes.png" />
+    <Content Include="Content\Images\login.jpg" />
+    <Content Include="Content\Images\Login.png" />
+    <Content Include="Content\Images\unlikes.png" />
+    <Content Include="Content\Main.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -240,6 +252,10 @@
     <Content Include="Views\Articles\Details.cshtml" />
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Articles\Index.cshtml" />
+    <Content Include="Views\Articles\View.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Articles\IndexEmployee.cshtml" />
+    <Content Include="Views\Articles\ReadArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

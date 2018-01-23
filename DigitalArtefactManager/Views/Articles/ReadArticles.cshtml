@@ -1,0 +1,97 @@
+﻿@model DigitalArtefactManager.Models.Article
+
+@{
+    ViewBag.Title = "ReadArticles";
+}
+
+<h2>Read Article</h2>
+<p>
+    @Html.ActionLink("Back to List", "IndexEmployee")
+</p>
+<div>
+    <table class="table" width="400">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Body)
+            </th>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Body)
+                </td>
+              
+                <td>
+
+                    @*<input type="image" height="30" width="30" src="~/Content/Images/likes.png" class="btnLike" value="Like" data-id="model.Article.ArticleId" data-count="@ViewBag.likeCount" id="btnLike" onclick="" />
+                    <input type="image" height="30" width="30" src="~/Content/Images/unlikes.png" class="btnDisLike" value="Dislike" id="btnDisLike" data-id="@item.ArticleId" onclick="" />*@
+                </td>
+            </tr>
+
+    </table>
+  
+</div>
+<p>
+    @Html.DisplayNameFor(model => model.publisher) :
+    @Html.DisplayFor(model => model.publisher)
+
+</p>
+<p>
+    @Html.DisplayNameFor(model => model.publishDate) :
+    @Html.DisplayFor(model => model.publishDate)
+</p>
+
+<p>
+    <input type="image" height="30" width="30" src="~/Content/Images/likes.png" title="Like" class="btnLike" value="Like" data-id="@Model.ArticleId"  id="btnLike" onclick="" />
+</p>
+
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('.btnLike').click(function () {
+                var AId = $(this).data('id');
+                $.ajax({
+                    url: "@Url.Action("Like", "Articles")",
+                    type: "POST",
+                    data: { id: AId, status: true },
+                    cache: false,
+                    async: true,
+                    success: function (data) {
+
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

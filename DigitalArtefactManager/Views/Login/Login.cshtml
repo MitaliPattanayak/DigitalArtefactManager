@@ -1,0 +1,63 @@
+﻿@model DigitalArtefactManager.Models.User
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<br />@*@using (Html.BeginForm("Login", "Login", FormMethod.Post))*@
+
+
+@using (Ajax.BeginForm("Login", "Login", new AjaxOptions { HttpMethod = "POST", OnSuccess = "submitSuccess" }))
+    {
+    <fieldset>
+        <legend>Digital Artefact Manager Login</legend>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @if (@ViewBag.Message != null)
+        {
+            <div style="border: 1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+        <table>
+            <tr>
+                <td>@Html.Label("User Name")</td>
+                <td>@Html.TextBoxFor(m => m.UserName)</td>
+                <td>@Html.ValidationMessageFor(m => m.UserName )</td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.Label("Password")
+                </td>
+                <td>
+                    @Html.PasswordFor(m => m.Password)
+                </td>
+                <td>
+                    @Html.ValidationMessageFor(m => m.Password)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Login" />
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </fieldset>
+} 
+
+@section Scripts
+{
+<script>
+    function submitSuccess() {
+        alert
+        if ('@TempData["Success"]' == true)
+{
+    alert("Form successfully submitted");
+    // handle refreshing the view, or redirect to another View (window.location.href = "")
+}
+    }
+</script> 
+}

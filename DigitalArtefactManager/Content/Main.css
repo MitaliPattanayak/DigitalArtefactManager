@@ -1,0 +1,16 @@
+﻿body {
+    background-image:url(/Content/Images/articles.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-style:normal;
+}
+
+.bluefont {
+    color: blue;
+    font-weight:bold;
+}
+
+.tab {
+    display: inline-block;
+    margin-left: 40px;
+}

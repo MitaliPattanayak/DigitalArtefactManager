@@ -1,0 +1,93 @@
+﻿@model IEnumerable<DigitalArtefactManager.Models.Article>
+
+@{
+    ViewBag.Title = "IndexEmployee";
+}
+
+<h2>Articles</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Body)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.publisher)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.publishDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Body)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.publisher)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.publishDate)
+        </td>
+        <td>
+            
+            @*<input type="image" height="30" width="30" src="~/Content/Images/likes.png" class="btnLike" value="Like" data-id="@item.ArticleId" data-count="@ViewBag.likeCount" id="btnLike" onclick="" />
+            <input type="image" height="30" width="30" src="~/Content/Images/unlikes.png" class="btnDisLike" value="Dislike" id="btnDisLike" data-id="@item.ArticleId"  onclick="" />*@
+            @Html.ActionLink("Read", "ReadArticles", new { id = item.ArticleId }) 
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts
+{
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('.btnLike').click(function () {
+            var AId = $(this).data('id');
+            $.ajax({
+                url: "@Url.Action("Like", "Articles")",
+                type: "POST",
+                data: { id: AId , status: true},
+                cache: false,
+                async: true,
+                success: function (data) {
+
+                    $('.btnLike[data-id="' + AId + '"]').css("display", "none")
+                    $('.btnDisLike[data-id="' + AId + '"]').css("display", "block");
+                }
+            });
+        });
+
+
+         $('.btnDisLike').click(function () {
+             var AId = $(this).data('id');
+            $.ajax({
+                url: "@Url.Action("Like", "Articles")",
+                type: "POST",
+                data: { id: AId , status: false},
+                cache: false,
+                async: true,
+                success: function (data) {
+                  
+                    $('.btnDisLike[data-id="' + AId + '"]').css("display", "none")
+                    $('.btnLike[data-id="' + AId + '"]').css('display', "block");
+
+                }
+            });
+        });
+
+    });
+</script>
+    }

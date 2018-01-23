@@ -1,31 +1,43 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
+<link href="~/Content/Main.css" rel="stylesheet" />
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h2 class="bluefont" style="text-align:center;">Digital Artefact Manager</h2>
+    <p class="lead">
+    <p>
+        Digital Artefact Manager (DAM) is an online Article Repository which
+        allow users to read, like, comment, and put suggestions on the
+        posted articles. This is one of our Knowledge Management (KM) tool to
+    facilitate the process of creating, sharing, using and managing
+    the knowledge and information of our organisation.
+    As an enabler of organisational learning, DAM aims to focus on improved performance, competitive advantage,
+        innovation, the sharing of lessons learned, integration and continuous
+        improvement of the organisation. </p>
+
+    </p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h5  class="bluefont">Click the icon below to Login</h5>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+
+           <img src="~/Content/Images/Login.jpg" width="200" height="200" alt="Login" onclick="location.href='@Url.Action("Login", "Login")'"  />
         </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <p></p>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+    <div  class="col-md-4">
+        <h5 class="bluefont">Your Suggestions !!</h5>
+        <p>Digital Artefact Manager Welcomes Your Suggestions.
+
+        Do you have any suggestions for us on how we can improve our service or our website? 
+        Did you find what you needed? 
+        Was it accurate and complete? 
+        Do you need forum or any addition to our service?
+
+        Let us know what you think! 
+        Your comments are sincerely appreciated!</p></div>
 </div>

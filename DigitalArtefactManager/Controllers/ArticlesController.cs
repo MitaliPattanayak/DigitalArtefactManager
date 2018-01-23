@@ -17,23 +17,67 @@ namespace DigitalArtefactManager.Controllers
         // GET: Articles
         public ActionResult Index()
         {
-            return View(db.Articles.ToList());
+            if (Session["UserName"] != null)
+                 {
+                return View(db.Articles.ToList());
+            }
+            else
+                return RedirectToAction("Login", "Login");
+        }
+
+        // GET: Articles
+        public ActionResult IndexEmployee()
+        {
+            if (Session["UserName"] != null)
+            {
+                return View(db.Articles.ToList());
+            }
+            else
+                return RedirectToAction("Login", "Login");
         }
 
         // GET: Articles/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            if (Session["UserName"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Article article = db.Articles.Find(id);
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(article);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
-            {
-                return HttpNotFound();
-            }
-            return View(article);
+            else
+                return RedirectToAction("Login", "Login");
         }
+
+        // GET: Articles/Details/5
+        public ActionResult ReadArticles(int? id)
+        {
+            if (Session["UserName"] != null)
+            {
+
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Article article = db.Articles.Find(id);
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(article);
+            }
+            else
+                return RedirectToAction("Login", "Login");
+        }
+
 
         // GET: Articles/Create
         public ActionResult Create()
@@ -50,6 +94,8 @@ namespace DigitalArtefactManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                article.publisher = Session["UserName"].ToString();
+                article.publishDate = DateTime.Now;
                 db.Articles.Add(article);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -82,6 +128,8 @@ namespace DigitalArtefactManager.Controllers
         {
             if (ModelState.IsValid)
             {
+                article.publisher = Session["UserName"].ToString();
+                article.publishDate = DateTime.Now;
                 db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -123,5 +171,51 @@ namespace DigitalArtefactManager.Controllers
             }
             base.Dispose(disposing);
         }
+        
+
+        [HttpPost]
+        public void Like(int id, bool status)
+        {
+            using (var db = new DigitalArtefactEntities()) //this dbentities to access class from Model also we will get in wed.config  
+            {
+                int Aid = id;
+                bool LikeStatus = status;
+                var articles = db.Articles.FirstOrDefault(x => x.ArticleId == Aid);
+                //var toggle = false;
+               
+                string userName = Session["UserName"].ToString();
+                Like like = db.Likes.FirstOrDefault(x => x.ArticleId == Aid && x.UserName == userName);
+                
+                // here we are checking whether user have done like or dislike    
+                
+                    like = new Like();
+                    like.UserName = Session["userName"].ToString();
+                    like.IsLiked = LikeStatus;
+                    like.ArticleId = id;
+                    
+                    db.Likes.Add(like);                
+                    db.SaveChanges();
+            }
+        }
+
+        public int? Getlikecounts(int id) // to count like  
+        {
+            using (var db = new DigitalArtefactEntities())
+            {
+                var count = (from x in db.Likes where (x.ArticleId == id && x.UserName != null )select x).Count();
+                ViewBag.likeCount = count;
+                return count;
+            }
+        }
+        ////To Get DisLike Count  
+        public int? Getdislikecounts(int id)
+        {
+            using (var db = new DigitalArtefactEntities())
+            {
+                var count = (from x in db.Likes where x.ArticleId == id && x.UserName != null select x).Count();
+                return count;
+            }
+        }
+       
     }
 }

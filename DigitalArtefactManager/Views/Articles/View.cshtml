@@ -1,12 +1,14 @@
 ﻿@model IEnumerable<DigitalArtefactManager.Models.Article>
 
 @{
-    ViewBag.Title = "Articles";
+    ViewBag.Title = "View";
 }
 
-<h2>Articles</h2>
+<h2>View</h2>
 
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -39,7 +41,9 @@
             @Html.DisplayFor(modelItem => item.publishDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ArticleId }) |
+
+           
+
             @Html.ActionLink("Details", "Details", new { id=item.ArticleId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.ArticleId })
         </td>
@@ -47,7 +51,3 @@
 }
 
 </table>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
