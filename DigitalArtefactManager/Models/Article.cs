@@ -26,6 +26,7 @@ namespace DigitalArtefactManager.Models
         public string Body { get; set; }
         public string publisher { get; set; }
         public Nullable<System.DateTime> publishDate { get; set; }
+        public Nullable<int> likeCount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }

@@ -14,6 +14,7 @@
           <Property Name="Body" Type="nvarchar(max)" />
           <Property Name="publisher" Type="nvarchar" MaxLength="100" />
           <Property Name="publishDate" Type="datetime" />
+          <Property Name="likeCount" Type="int" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -33,6 +34,15 @@
           <Property Name="IsLiked" Type="bit" />
           <Property Name="ArticleId" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" />
         </EntityType>
         <Association Name="FK_Comment_Comment">
           <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
@@ -62,6 +72,7 @@
           <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Likes" EntityType="Self.Likes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Comment_Comment" Association="Self.FK_Comment_Comment">
             <End Role="Article" EntitySet="Article" />
             <End Role="Comments" EntitySet="Comments" />
@@ -86,6 +97,7 @@
           <Property Name="publishDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Comments" Relationship="DigitalArtefact.Models.FK_Comment_Comment" FromRole="Article" ToRole="Comment" />
           <NavigationProperty Name="Likes" Relationship="DigitalArtefact.Models.FK_Likes_Article" FromRole="Article" ToRole="Like" />
+          <Property Name="likeCount" Type="Int32" />
         </EntityType>
         <EntityContainer Name="DigitalArtefactEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Articles" EntityType="Self.Article" />
@@ -99,6 +111,7 @@
             <End Role="Article" EntitySet="Articles" />
             <End Role="Like" EntitySet="Likes" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="DigitalArtefact.Models.User" />
         </EntityContainer>
         <EntityType Name="Comment">
           <Key>
@@ -145,6 +158,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -154,6 +176,7 @@
           <EntitySetMapping Name="Articles">
             <EntityTypeMapping TypeName="DigitalArtefact.Models.Article">
               <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="likeCount" ColumnName="likeCount" />
                 <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
@@ -180,6 +203,16 @@
                 <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
                 <ScalarProperty Name="IsLiked" ColumnName="IsLiked" />
                 <ScalarProperty Name="LikeId" ColumnName="LikeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DigitalArtefact.Models.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
