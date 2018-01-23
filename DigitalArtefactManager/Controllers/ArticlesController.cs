@@ -94,31 +94,41 @@ namespace DigitalArtefactManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ArticleId,Title,Body,publisher,publishDate")] Article article)
         {
-            if (ModelState.IsValid)
+            if (Session["UserName"] != null)
             {
-                article.publisher = Session["UserName"].ToString();
-                article.publishDate = DateTime.Now;
-                db.Articles.Add(article);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    article.publisher = Session["UserName"].ToString();
+                    article.publishDate = DateTime.Now;
+                    db.Articles.Add(article);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(article);
             }
-
-            return View(article);
+            else
+                return RedirectToAction("Login", "Login");
         }
 
         // GET: Articles/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            if (Session["UserName"] != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Article article = db.Articles.Find(id);
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(article);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
-            {
-                return HttpNotFound();
-            }
-            return View(article);
+            else
+                return RedirectToAction("Login", "Login");
         }
 
         // POST: Articles/Edit/5
@@ -128,30 +138,40 @@ namespace DigitalArtefactManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ArticleId,Title,Body,publisher,publishDate")] Article article)
         {
-            if (ModelState.IsValid)
+            if (Session["UserName"] != null)
             {
-                article.publisher = Session["UserName"].ToString();
-                article.publishDate = DateTime.Now;
-                db.Entry(article).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    article.publisher = Session["UserName"].ToString();
+                    article.publishDate = DateTime.Now;
+                    db.Entry(article).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(article);
             }
-            return View(article);
+            else
+                return RedirectToAction("Login", "Login");
         }
 
         // GET: Articles/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             if (Session["UserName"] != null)
+             {
+                    if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Article article = db.Articles.Find(id);
+                if (article == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(article);
             }
-            Article article = db.Articles.Find(id);
-            if (article == null)
-            {
-                return HttpNotFound();
-            }
-            return View(article);
+            else
+            return RedirectToAction("Login", "Login");
         }
 
         // POST: Articles/Delete/5
@@ -159,10 +179,15 @@ namespace DigitalArtefactManager.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Article article = db.Articles.Find(id);
-            db.Articles.Remove(article);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            if (Session["UserName"] != null)
+            {
+                Article article = db.Articles.Find(id);
+                db.Articles.Remove(article);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return RedirectToAction("Login", "Login");
         }
 
         protected override void Dispose(bool disposing)

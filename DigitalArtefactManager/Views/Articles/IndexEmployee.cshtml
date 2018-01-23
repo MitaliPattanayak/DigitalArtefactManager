@@ -39,55 +39,9 @@
             @Html.DisplayFor(modelItem => item.publishDate)
         </td>
         <td>
-            
-            @*<input type="image" height="30" width="30" src="~/Content/Images/likes.png" class="btnLike" value="Like" data-id="@item.ArticleId" data-count="@ViewBag.likeCount" id="btnLike" onclick="" />
-            <input type="image" height="30" width="30" src="~/Content/Images/unlikes.png" class="btnDisLike" value="Dislike" id="btnDisLike" data-id="@item.ArticleId"  onclick="" />*@
             @Html.ActionLink("Read", "ReadArticles", new { id = item.ArticleId }) 
         </td>
     </tr>
 }
 
 </table>
-
-@section Scripts
-{
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        $('.btnLike').click(function () {
-            var AId = $(this).data('id');
-            $.ajax({
-                url: "@Url.Action("Like", "Articles")",
-                type: "POST",
-                data: { id: AId , status: true},
-                cache: false,
-                async: true,
-                success: function (data) {
-
-                    $('.btnLike[data-id="' + AId + '"]').css("display", "none")
-                    $('.btnDisLike[data-id="' + AId + '"]').css("display", "block");
-                }
-            });
-        });
-
-
-         $('.btnDisLike').click(function () {
-             var AId = $(this).data('id');
-            $.ajax({
-                url: "@Url.Action("Like", "Articles")",
-                type: "POST",
-                data: { id: AId , status: false},
-                cache: false,
-                async: true,
-                success: function (data) {
-                  
-                    $('.btnDisLike[data-id="' + AId + '"]').css("display", "none")
-                    $('.btnLike[data-id="' + AId + '"]').css('display', "block");
-
-                }
-            });
-        });
-
-    });
-</script>
-    }

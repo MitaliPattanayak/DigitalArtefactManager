@@ -55,7 +55,6 @@
 
 @section Scripts
 {
-
     <script>
         function display() {
             $('.btnLike').css("display", "none");
@@ -63,16 +62,14 @@
     </script>
 
     <script type="text/javascript">
-
-
-
-        $(document).ready(function () {
- var val = parseInt(@ViewBag.likeCount);
+      $(document).ready(function () {
+        var val = parseInt(@ViewBag.likeCount);
         if (val > 5)
         {
             display();
         }
-            $('.btnLike').click(function () {
+
+        $('.btnLike').click(function () {
                 var AId = $(this).data('id');
                 $.ajax({
                     url: "@Url.Action("Like", "Articles")",
