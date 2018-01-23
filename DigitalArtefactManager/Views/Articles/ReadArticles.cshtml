@@ -55,7 +55,21 @@
 
 @section Scripts
 {
+
+    <script>
+        function display() {
+            $('.btnLike').css("display", "none");
+        }
+    </script>
+
     <script type="text/javascript">
+        var val = parseInt(@ViewBag.likeCount);
+        if (val > 5)
+        {
+            display();
+        }
+        
+
         $(document).ready(function () {
 
             $('.btnLike').click(function () {
@@ -67,7 +81,14 @@
                     cache: false,
                     async: true,
                     success: function (data) {
-
+                        if (data <= 5)
+                        {
+                            alert("You liked the article '" + data + "' times");
+                        }
+                        @*else {
+                            @ViewBag.likeCount= data;
+                            display(data);
+                        }*@
                     }
                 });
             });

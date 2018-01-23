@@ -11,8 +11,7 @@ namespace DigitalArtefactManager.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Article
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,16 +21,12 @@ namespace DigitalArtefactManager.Models
             this.Likes = new HashSet<Like>();
         }
     
-        [Key]
         public int ArticleId { get; set; }
-        [Required]
         public string Title { get; set; }
-        [Required]
         public string Body { get; set; }
-        [Display(Name ="Publisher")]
         public string publisher { get; set; }
-        [Display(Name = "Publish Date")]
         public Nullable<System.DateTime> publishDate { get; set; }
+        public Nullable<int> likeCount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }

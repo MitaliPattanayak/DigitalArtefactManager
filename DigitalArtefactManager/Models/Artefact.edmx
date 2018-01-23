@@ -14,6 +14,7 @@
           <Property Name="Body" Type="nvarchar(max)" />
           <Property Name="publisher" Type="nvarchar" MaxLength="100" />
           <Property Name="publishDate" Type="datetime" />
+          <Property Name="likeCount" Type="int" />
         </EntityType>
         <EntityType Name="Comments">
           <Key>
@@ -96,6 +97,7 @@
           <Property Name="publishDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Comments" Relationship="DigitalArtefact.Models.FK_Comment_Comment" FromRole="Article" ToRole="Comment" />
           <NavigationProperty Name="Likes" Relationship="DigitalArtefact.Models.FK_Likes_Article" FromRole="Article" ToRole="Like" />
+          <Property Name="likeCount" Type="Int32" />
         </EntityType>
         <EntityContainer Name="DigitalArtefactEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Articles" EntityType="Self.Article" />
@@ -174,6 +176,7 @@
           <EntitySetMapping Name="Articles">
             <EntityTypeMapping TypeName="DigitalArtefact.Models.Article">
               <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="likeCount" ColumnName="likeCount" />
                 <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Body" ColumnName="Body" />

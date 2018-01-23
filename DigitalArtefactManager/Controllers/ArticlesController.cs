@@ -18,7 +18,7 @@ namespace DigitalArtefactManager.Controllers
         public ActionResult Index()
         {
             if (Session["UserName"] != null)
-                 {
+            {
                 return View(db.Articles.ToList());
             }
             else
@@ -60,6 +60,7 @@ namespace DigitalArtefactManager.Controllers
         // GET: Articles/Details/5
         public ActionResult ReadArticles(int? id)
         {
+            
             if (Session["UserName"] != null)
             {
 
@@ -72,6 +73,7 @@ namespace DigitalArtefactManager.Controllers
                 {
                     return HttpNotFound();
                 }
+                ViewBag.likeCount = Getlikecounts(id);
                 return View(article);
             }
             else
@@ -171,51 +173,52 @@ namespace DigitalArtefactManager.Controllers
             }
             base.Dispose(disposing);
         }
-        
+
 
         [HttpPost]
-        public void Like(int id, bool status)
+        public int Like(int id, bool status)
         {
             using (var db = new DigitalArtefactEntities()) //this dbentities to access class from Model also we will get in wed.config  
             {
                 int Aid = id;
                 bool LikeStatus = status;
-                var articles = db.Articles.FirstOrDefault(x => x.ArticleId == Aid);
-                //var toggle = false;
-               
                 string userName = Session["UserName"].ToString();
+
+
+                var articles = db.Articles.FirstOrDefault(x => x.ArticleId == Aid);
                 Like like = db.Likes.FirstOrDefault(x => x.ArticleId == Aid && x.UserName == userName);
-                
-                // here we are checking whether user have done like or dislike    
+
                 
                     like = new Like();
                     like.UserName = Session["userName"].ToString();
                     like.IsLiked = LikeStatus;
                     like.ArticleId = id;
-                    
-                    db.Likes.Add(like);                
+
+                    if (articles.likeCount == null) // if no one has done like or dislike and first time any one doing like and dislike then assigning 1 and                                                                                0    
+                    {
+                        articles.likeCount = 1;
+                    }
+                    else
+                        articles.likeCount = articles.likeCount + 1;
+
+                    db.Likes.Add(like);
                     db.SaveChanges();
+                 int count = Getlikecounts(articles.ArticleId);
+                return count;
             }
         }
 
-        public int? Getlikecounts(int id) // to count like  
-        {
-            using (var db = new DigitalArtefactEntities())
+            public int Getlikecounts(int? ArticleId) // to count like  
             {
-                var count = (from x in db.Likes where (x.ArticleId == id && x.UserName != null )select x).Count();
-                ViewBag.likeCount = count;
-                return count;
+                using (var db = new DigitalArtefactEntities())
+                {
+                string userName = Session["UserName"].ToString();
+
+                var count = (from x in db.Likes where (x.ArticleId == ArticleId && x.UserName == userName) select x).Count();
+                    ViewBag.likeCount = count;
+                    return count;
+                }
             }
+            
         }
-        ////To Get DisLike Count  
-        public int? Getdislikecounts(int id)
-        {
-            using (var db = new DigitalArtefactEntities())
-            {
-                var count = (from x in db.Likes where x.ArticleId == id && x.UserName != null select x).Count();
-                return count;
-            }
-        }
-       
     }
-}
