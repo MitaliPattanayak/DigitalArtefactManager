@@ -11,26 +11,33 @@ namespace DigitalArtefactManager.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Article
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Article()
         {
-            this.Comments = new HashSet<Comment>();
             this.Likes = new HashSet<Like>();
+            this.Comments = new HashSet<Comment>();
         }
     
         public int ArticleId { get; set; }
+        [Display(Name ="Article Title")]
+        [Required]
         public string Title { get; set; }
+        [Display(Name = "Article")]
         public string Body { get; set; }
+        [Display(Name = "Posted by")]
         public string publisher { get; set; }
+        [Display(Name = "Posted on")]
         public Nullable<System.DateTime> publishDate { get; set; }
+        [Display(Name ="No. of Likes")]
         public Nullable<int> likeCount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comment> Comments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Like> Likes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

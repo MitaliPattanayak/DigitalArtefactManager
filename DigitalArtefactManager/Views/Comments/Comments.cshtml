@@ -1,0 +1,25 @@
+﻿@model IEnumerable<DigitalArtefactManager.Models.Comment>
+
+<div>
+    <table class="table">
+        
+
+        @foreach (var item in Model)
+        {
+            <tr>
+              
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentBody)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentedOn)
+                </td>
+
+
+            </tr>
+        }
+    </table>
+</div>

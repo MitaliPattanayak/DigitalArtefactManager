@@ -3,73 +3,102 @@
 @{
     ViewBag.Title = "ReadArticles";
 }
-
+<link href="~/Content/Main.css" rel="stylesheet" />
 <h2>Read Article</h2>
 <p>
     @Html.ActionLink("Back to List", "IndexEmployee")
 </p>
 <div>
-    <table class="table" width="400">
+    <table class="table" style="width:600px; text-align:justify">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayFor(model => model.Title)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Body)
-            </th>
-            </tr>
-
             <tr>
                 <td>
-                    @Html.DisplayFor(model => model.Title)
-                </td>
-                <td>
                     @Html.DisplayFor(model => model.Body)
-                </td>
-              
-                <td>
-
-                    @*<input type="image" height="30" width="30" src="~/Content/Images/likes.png" class="btnLike" value="Like" data-id="model.Article.ArticleId" data-count="@ViewBag.likeCount" id="btnLike" onclick="" />
-                    <input type="image" height="30" width="30" src="~/Content/Images/unlikes.png" class="btnDisLike" value="Dislike" id="btnDisLike" data-id="@item.ArticleId" onclick="" />*@
-                </td>
-            </tr>
+                </td></tr>
 
     </table>
   
 </div>
+
+
+<br /><br />
 <p>
     @Html.DisplayNameFor(model => model.publisher) :
-    @Html.DisplayFor(model => model.publisher)
-
+   <b>@Html.DisplayFor(model => model.publisher)</b> 
+    &nbsp;&nbsp;
+@Html.DisplayNameFor(model => model.publishDate) :
+<b>@Html.DisplayFor(model => model.publishDate)</b>
 </p>
 <p>
-    @Html.DisplayNameFor(model => model.publishDate) :
-    @Html.DisplayFor(model => model.publishDate)
+    
 </p>
 
 <p>
     <input type="image" height="30" width="30" src="~/Content/Images/likes.png" title="Like" class="btnLike" value="Like" data-id="@Model.ArticleId"  id="btnLike" onclick="" />
-</p>
 
+</p>
+<div id="divComment">
+    @Html.TextArea("txtComment", new { @class = "textArea" })
+    <input class="btnSubmit" type="button" data-id="@Model.ArticleId" id="btnSubmit" value="Post" onclick=""/>
+</div>
+
+
+<div id="render">
+</div>
+
+<br />
+<br />
+<br />
+<div>
+    @Html.ActionLink("Logout", "Login", "Login")
+</div>
 
 
 @section Scripts
 {
     <script>
+        //Function to hide Like Icon
         function display() {
             $('.btnLike').css("display", "none");
         }
-    </script>
+ </script>
 
-    <script type="text/javascript">
-      $(document).ready(function () {
-        var val = parseInt(@ViewBag.likeCount);
-        if (val > 5)
-        {
-            display();
-        }
+ <script type="text/javascript">
+        $(document).ready(function () {
 
-        $('.btnLike').click(function () {
+            //Show comments on page load
+            $("#render").load('@Url.Action("Comments", "Comments",new { Aid=Model.ArticleId})');
+
+
+            //Submit/post comment on Post button click
+            $('.btnSubmit').click(function () {
+                var AId = $(this).data('id');
+                var comment = $("#txtComment").val();
+                $.ajax({
+                    url: "@Url.Action("PostComment", "Comments")",
+                    type: "POST",
+                    data: { Aid: AId, comments:comment},
+                    cache: false,
+                    async: true,
+                    success: function (data) {
+                                    $("#txtComment").val("");
+                                    alert('Comment posted !');
+                                    $("#render").load('@Url.Action("Comments", "Comments",new { Aid=Model.ArticleId})');
+                    }
+                });
+            });
+
+            //Check if total like count for the logged in user is equal to or more than 5
+            var val = parseInt(@ViewBag.likeCount);
+            if (val >= 5) {
+                display();
+            }
+
+            //Submit Like for an article on Like icon click
+            $('.btnLike').click(function () {
                 var AId = $(this).data('id');
                 $.ajax({
                     url: "@Url.Action("Like", "Articles")",
@@ -78,17 +107,19 @@
                     cache: false,
                     async: true,
                     success: function (data) {
-                        if (data <= 5)
-                        {
-                            alert("You liked the article '" + data + "' times");
+                        if (data < 5) {
+                            alert("You liked the article '" + data + "' time(s)");
                         }
                         else {
+                            //Make the Like icon invisible on reaching limits (5 likes)
                             display();
                             alert("Sorry, you have reached the like limits.'" + data + "' times");
                         }
                     }
                 });
             });
+
+
         });
     </script>
 }

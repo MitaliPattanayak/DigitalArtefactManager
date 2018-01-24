@@ -15,12 +15,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Body)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.publisher)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.publishDate)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -28,18 +23,22 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Title)
+           
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Body)
         </td>
+       
         <td>
-            @Html.DisplayFor(modelItem => item.publisher)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.publishDate)
-        </td>
-        <td>
-            @Html.ActionLink("Read", "ReadArticles", new { id = item.ArticleId }) 
+            @if ((item.likeCount) != null)
+            {
+                <span class="grayfont">
+                    @Html.DisplayFor(modelItem => item.likeCount) Like(s)
+                </span>
+            }
+            <span class="bluefont">
+                @Html.ActionLink("Read the Article", "ReadArticles", new { id = item.ArticleId })
+            </span>
         </td>
     </tr>
 }

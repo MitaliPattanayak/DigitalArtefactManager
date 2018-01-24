@@ -21,6 +21,9 @@
         <th>
             @Html.DisplayNameFor(model => model.publishDate)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.likeCount)
+        </th>
         <th></th>
     </tr>
 
@@ -38,6 +41,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.publishDate)
         </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.likeCount)
+        </th>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ArticleId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ArticleId }) |
@@ -49,5 +55,10 @@
 </table>
 
 <p>
-    @Html.ActionLink("Post New", "Create")
+    @Html.ActionLink("Create Article", "Create")
+    </p><br />
+<p>
+    @Html.ActionLink("Most Liked Articles", "MostLiked")
+
 </p>
+

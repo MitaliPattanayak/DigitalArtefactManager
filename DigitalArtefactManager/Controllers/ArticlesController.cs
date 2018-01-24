@@ -14,12 +14,12 @@ namespace DigitalArtefactManager.Controllers
     {
         private DigitalArtefactEntities db = new DigitalArtefactEntities();
 
-        // GET: Articles
+        // GET: Articles order by created date
         public ActionResult Index()
         {
             if (Session["UserName"] != null)
             {
-                return View(db.Articles.ToList());
+                return View(db.Articles.OrderByDescending(c => c.publishDate).ToList());
             }
             else
                 return RedirectToAction("Login", "Login");
@@ -30,7 +30,7 @@ namespace DigitalArtefactManager.Controllers
         {
             if (Session["UserName"] != null)
             {
-                return View(db.Articles.ToList());
+                return View(db.Articles.OrderByDescending(c=>c.publishDate).ToList());
             }
             else
                 return RedirectToAction("Login", "Login");
@@ -88,8 +88,6 @@ namespace DigitalArtefactManager.Controllers
         }
 
         // POST: Articles/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ArticleId,Title,Body,publisher,publishDate")] Article article)
@@ -132,8 +130,6 @@ namespace DigitalArtefactManager.Controllers
         }
 
         // POST: Articles/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ArticleId,Title,Body,publisher,publishDate")] Article article)
@@ -181,10 +177,17 @@ namespace DigitalArtefactManager.Controllers
         {
             if (Session["UserName"] != null)
             {
-                Article article = db.Articles.Find(id);
-                db.Articles.Remove(article);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    Article article = db.Articles.Find(id);
+                    db.Articles.Remove(article);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception e)
+                {
+                    return RedirectToAction("Login", "Login");
+                }
             }
             else
                 return RedirectToAction("Login", "Login");
@@ -199,11 +202,11 @@ namespace DigitalArtefactManager.Controllers
             base.Dispose(disposing);
         }
 
-
+        //Like an article on Like icon click
         [HttpPost]
         public int Like(int id, bool status)
         {
-            using (var db = new DigitalArtefactEntities()) //this dbentities to access class from Model also we will get in wed.config  
+            using (var db = new DigitalArtefactEntities())  
             {
                 int Aid = id;
                 bool LikeStatus = status;
@@ -233,7 +236,8 @@ namespace DigitalArtefactManager.Controllers
             }
         }
 
-            public int Getlikecounts(int? ArticleId) // to count like  
+        //Get like counts for an article
+            public int Getlikecounts(int? ArticleId) // to count like by article id and user  
             {
                 using (var db = new DigitalArtefactEntities())
                 {
@@ -244,6 +248,17 @@ namespace DigitalArtefactManager.Controllers
                     return count;
                 }
             }
-            
+
+        // GET: Articles by like counts
+        public ActionResult MostLiked()
+        {
+            if (Session["UserName"] != null)
+            {
+                return View(db.Articles.OrderByDescending(c => c.likeCount).ToList());
+            }
+            else
+                return RedirectToAction("Login", "Login");
         }
+
+    }
     }

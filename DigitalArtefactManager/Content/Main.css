@@ -5,12 +5,24 @@
     font-style:normal;
 }
 
+.alignjustify{
+    text-align:justify;
+}
+
 .bluefont {
     color: blue;
     font-weight:bold;
 }
-
+.grayfont {
+    font-weight:normal;
+    color:grey;
+}
 .tab {
     display: inline-block;
     margin-left: 40px;
+}
+
+.textArea{
+    width:600px;
+    height: 40px;
 }

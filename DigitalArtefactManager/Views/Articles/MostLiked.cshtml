@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<DigitalArtefactManager.Models.Article>
 
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Most Liked Articles";
 }
 
-<h2>View</h2>
+<h2>MostLiked</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Back to Articles", "Index")
 </p>
 <table class="table">
     <tr>
@@ -23,7 +23,10 @@
         <th>
             @Html.DisplayNameFor(model => model.publishDate)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.likeCount)
+        </th>
+        
     </tr>
 
 @foreach (var item in Model) {
@@ -41,21 +44,10 @@
             @Html.DisplayFor(modelItem => item.publishDate)
         </td>
         <td>
-
-           
-
-            @Html.ActionLink("Details", "Details", new { id=item.ArticleId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ArticleId })
+            @Html.DisplayFor(modelItem => item.likeCount)
         </td>
+       
     </tr>
 }
 
 </table>
-
-
-<br />
-<br />
-<br/>
-<div>
-    @Html.ActionLink("Logout", "Login", "Login")
-</div>

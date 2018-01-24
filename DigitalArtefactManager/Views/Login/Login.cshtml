@@ -10,7 +10,7 @@
 @using (Ajax.BeginForm("Login", "Login", new AjaxOptions { HttpMethod = "POST", OnSuccess = "submitSuccess" }))
     {
     <fieldset>
-        <legend>Digital Artefact Manager Login</legend>
+        <legend>DAM Login</legend>
 
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true)

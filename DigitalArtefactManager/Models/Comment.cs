@@ -11,14 +11,19 @@ namespace DigitalArtefactManager.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Comment
     {
         public int CommentId { get; set; }
-        public string Body { get; set; }
+        [Display(Name ="Comment")]
+        //[Required]
+        public string CommentBody { get; set; }
         public Nullable<int> ArticleId { get; set; }
-        public Nullable<System.DateTime> CommentedOn { get; set; }
+        [Display(Name = "Commented by")]
         public string CommentedBy { get; set; }
+        [Display(Name ="Commented on")]
+        public Nullable<System.DateTime> CommentedOn { get; set; }
     
         public virtual Article Article { get; set; }
     }
